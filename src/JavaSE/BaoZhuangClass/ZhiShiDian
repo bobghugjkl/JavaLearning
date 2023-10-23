@@ -1,0 +1,88 @@
+233~237
+在泛型上经常使用到
+
+
+装箱：把基本类型的数据，包装到包装类中（基本数据类型的数据=》包装类）
+    构造方法：
+        Integer(int value)构造一个新分配的Integer对象，他表示制定的int值
+        Integer(String s)构造一个新分配的Integer对象，他表示String参数所指示的int值
+            传递的字符串必须是基本类型的字符串，否则会抛出异常
+    静态方法：
+        static Integer valueOf(int i)返回一个指定int类型的Integer实例
+        static Integer valueOf(String s)返回保存指定的String的值的Integer对象
+拆箱：在包装类中取出基本数据类型（包装类=》基本数据类型的数据）
+    成员方法：
+        int intValue();
+
+        //装箱
+        //构造方法
+        Integer in1 = new Integer(1);
+        System.out.println(in1);//重写了toString方法
+        Integer in2 = new Integer("1");
+        System.out.println(in2);
+        //静态方法
+        Integer in3 = Integer.valueOf(1);
+        System.out.println(in3);
+        Integer in4 = Integer.valueOf("1");
+        System.out.println(in4);;
+        //拆箱
+        int i=in1.intValue();
+        System.out.println(i);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+自动装箱与自动开箱
+基本类型数据与包装类之间可以相互转换
+//自动装箱
+        Integer in = 1;
+        //自动拆箱
+        //in是包装类，无法参与运算，但他可以自动转换为基本类型的数据，再参与计算
+        in +=2;
+        System.out.println(in);
+        ArrayList<Integer>list = new ArrayList<>();//Arraylist集合无法存整数，但可以存储Integer包装类
+        list.add(1);//装箱
+        int a=list.get(0);//拆箱
+
+
+
+
+
+
+
+
+
+基本数据类型与字符串类型的转换
+parse方法(除了Charcter)
+ /*基本类型转换成字符串
+        1.基本类型数据的值=""
+        2.static String toString()方法
+        3.String中的静态方法 static String valueOf()
+        反过来
+        parseXX("...")
+    */
+        String s1 =100+"";
+        System.out.println(s1+200);//100200
+
+
+        String s2 =Integer.toString(100);
+        System.out.println(s2+200);
+
+
+        String s3 = String.valueOf(100);
+        System.out.println(s3+200);
+        //反过来
+        int i = Integer.parseInt("100");
+        System.out.println(i+200);

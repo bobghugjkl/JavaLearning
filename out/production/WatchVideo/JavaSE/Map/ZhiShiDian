@@ -1,0 +1,173 @@
+元素一一对应，成对存在，由键到值
+键不允许重复，但是value可以重复：Map<k,v>
+
+
+HashMap<k,v>无序，不同步，速度快
+    LinkedHashMap:可预知的迭代顺序，哈希表+链表，有序：存储和取出的顺序一样
+遍历Map集合对象
+    第一种
+        1.把map中的所有key取出来存储到set集合中————Set<k>keySet()
+        2.使用迭代器或增强for遍历Set集合
+        3.用get获取即可
+    第二种：
+        Entry<k,v>在map中有个内部接口叫Entry，用来记录键与值，像结婚证
+        里面有entrySet()把map集合内部多个entry对象取出来存储到set里面————Set<Map.Entry<k,v>>
+        遍历set集合，getkey和getvalue方法
+
+package JavaSE.Map;
+
+import java.util.Objects;
+
+public class Person {
+    private String name;
+    private int age;
+
+    public Person() {
+    }
+
+    @Override
+//    public String toString() {
+//        return "Person{" +
+//                "name='" + name + '\'' +
+//                ", age=" + age +
+//                '}';
+//    }
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Person person = (Person) o;
+//        return age == person.age && Objects.equals(name, person.name);
+//    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+package JavaSE.Map;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+public class Demo01Map {
+    public static void main(String[] args) {
+        show01();
+        show02();
+        show03();
+    }
+    private static void show03(){
+        /*
+        get(key)方法，寻找
+         */
+        Map<String ,Integer>map = new HashMap<>();
+        map.put("斋藤飞鸟",168);
+        map.put("西野七濑",170);
+        map.put("与田祐希",165);
+        Integer s = map.get("西野七濑");
+        //集合第一种遍历方式，通过键找值的方式
+        Set<String> strings = map.keySet();
+        Iterator<String> iterator1 = strings.iterator();
+        while(iterator1.hasNext()){
+            String next1 = iterator1.next();
+            Integer integer1 = map.get(next1);
+            System.out.println(next1+"="+integer1);
+
+
+        }
+        //增强for遍历
+        for(String key:map.keySet()){
+            Integer integer2 = map.get(key);
+            System.out.println(key+"="+integer2);
+
+        }
+        //集合第二种方式
+        Set<Map.Entry<String, Integer>> set = map.entrySet();
+        Iterator<Map.Entry<String, Integer>> iterator = set.iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String, Integer> next01 = iterator.next();
+            String key = next01.getKey();
+            Integer value = next01.getValue();
+            System.out.println(key+"="+value);
+
+
+
+        }
+        //同样的增强for
+        for(Map.Entry<String,Integer>entry:set){
+            String key2 = entry.getKey();
+            Integer value2 = entry.getValue();
+            System.out.println(key2+"="+value2);
+
+
+        }
+
+
+        /*
+        containKey(Object key)
+        判断是否包含指定键
+         */
+    }
+
+    private static void show02(){
+        /*
+        remove(k)
+        k存在返回被删除的值，否则null
+         */
+        Map<String ,Integer>map = new HashMap<>();
+        map.put("斋藤飞鸟",168);
+        map.put("西野七濑",170);
+        map.put("与田祐希",165);
+        System.out.println(map);
+        Integer v1 = map.remove("西野七濑");//不可以用int接收
+        System.out.println("v1:"+v1);
+        System.out.println(map);
+
+    }
+    private static void show01(){
+        //创建map集合=》多态
+        Map<String,String>map=new HashMap<>();
+        /*
+        put(k,v):指定的键与指定的值添加到map中
+        返回值 v：
+            存储键值对的时候，key不重复，返回null
+            存储的时候，key重复，会使用新的value替换map中的重复的value，返回被替换的value值
+         */
+        String put1 = map.put("李晨", "范冰冰1");
+        System.out.println("put1："+put1);
+        String put2 = map.put("李晨", "范冰冰2");
+        System.out.println("put2："+put2);
+        System.out.println(map);
+    }
+}
+
+
+
+
+存储自定义类的
+即现在在代码那里的

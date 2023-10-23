@@ -1,0 +1,193 @@
+本身是一个类，有个顶层父类：Throeable，下面有两个子类Error和Exception
+    Exception：编译异常
+        RuntimeException运行期异常，相当于小毛病，只能用try-catch来处理
+    Error：无法治愈，必须修改源代码
+public static void main(String[] args) {
+        //Exception
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//用来格式化日期
+        try {
+            Date date = sdf.parse("1999-09-09");//把字符串类型的日期解析成date格式的日期,若不处理会一直在这儿报错
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        //两种方式：把鼠标放在上面（点击）然后alt+回车会看到两种处理办法，第一种方法是交给虚拟机会报错会影响执行，第二种就是现在的这种，他不会停止程序
+        int[]arr={1,2,3};
+        try{
+            //可能出现异常的代码
+            System.out.println(arr[3]);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        System.out.println("后续代码");
+    }
+
+
+
+
+1.方法体将问题抛给main=>2.main将问题抛给JVM=>3.JVM打印出来问题并中断程序
+
+如果我们解决不了就会向上抛，就叫做throw，叫java逐级甩锅机制
+throw：抛出指定异常
+    1.必须写在方法内部
+    2.后面new的对象必须是exception或者其子类对象
+    3.抛出指定的异常对象，我们就必须处理这个异常对象
+      throw关键字的后面创建的是runtimeexception或者其子类，我们可以不处理，交给JVM来处理
+      若是编译异常，我们就必须处理这个异常，要么throws要么try-catch
+/*
+    定义一个方法，获取数组的指定索引处的元素
+    工作中必须首先对方法传递过来的参数进行合法性校验
+    如果参数不合法，我们就必须使用抛出异常的方式，告知调用者参数有问题
+     */
+    public static void main(String[] args) {
+       int []arr =new int[3];
+       int e =getElement(arr,3);
+        System.out.println(e);
+    }
+    public static int getElement(int []arr,int index){
+        /*
+        我们可以对传递过来的参数进行合法性的校验
+        如果arr空，就跑出空指针异常
+         */
+        /*
+        数组越界异常
+         */
+        if(arr==null){
+            throw new NullPointerException("传递的数组是null");
+        }
+        if(index<0||index>arr.length-1){
+            throw new ArrayIndexOutOfBoundsException("数组越界");
+        }
+        int ele=arr[index];
+        return ele;
+    }
+
+
+
+object类中的静态方法
+/*
+
+     */
+    public static void main(String[] args) {
+      getElement(null);
+    }
+    public static void getElement(Object obj){
+        Objects.requireNonNull(obj);//不用写其他方法了，直接用object中的方法
+    }
+
+
+throw关键字：第一种处理方式，交给调用者处理
+在方法声明时使用
+修饰符 返回值类型 方法名（参数名）throws AAAexception....{
+    throws new AAAexception("");
+    ....
+}
+必须写在方法声明后，后面声明的对象必须是exception或者是其子类，方法内部抛出了多个异常，那么throw后面也必须声明多个子类，若有子父类类型直接声明父类异常即可，
+必须处理声明的异常
+public static void main(String[] args) throws Exception{
+        readFile("c:\\.a.tx");
+    }
+    /*
+    定义一个方法对文件路径进行合法判断
+    文件异常是编译异常，所以必须处理
+    可以用throw继续抛出 FileNotFoundException对象,但这样的话主函数什么的都要继续抛出这个异常对象
+     */
+    public static void readFile(String fileName)throws FileNotFoundException,IOException{
+        if(!fileName.equals("c:\\a.txt"))
+        {
+            throw new FileNotFoundException("传递文件路径不一致");
+        }
+
+        if (!fileName.endsWith(".txt")){
+            throw new IOException("文件后缀名不对");
+        }
+    }
+
+
+第二种处理方式，自己处理，try-catch
+public class Dmeo1YiChang {
+
+
+
+
+重点：！！！！！！
+    /*
+    try-catch:一般在工作中记录在日志中进行对照，catch可以有多个，括号里面是异常类型和变量名
+    但是多个catch中子类要写在父类上面（异常类）：不论是父类还是子类都可以被父类抓到，这样的话后面的子类没有意义会报错***********************
+    当然也可以写一个父类的异常，多个异常一次捕获
+    运行时的异常可以不处理，给虚拟机处理
+    没有异常只会执行try中的
+     */
+
+
+
+
+    public static void main(String[] args) {
+        try {
+            readFile("c:\\.a.tx");
+        }catch (IOException e){
+            System.out.println("传递文件后缀不对");
+        }
+    }
+    public static void readFile(String fileName)throws IOException{
+        if(!fileName.equals("c:\\a.txt"))
+        {
+            throw new FileNotFoundException("传递文件路径不一致");
+        }
+
+        if (!fileName.endsWith(".txt")){
+            throw new IOException("文件后缀名不对");
+        }
+    }
+}
+
+
+
+
+
+Throwable中三个处理异常的方法(会显示异常对象的样子)
+getMessage()
+toString()这两个要用sout
+printStackTrace()不需要sout
+
+
+finally代码块
+不可以单独使用
+一般用于资源回收（IO流）
+不要写return语句
+
+
+
+注意：父类异常什么样子类异常就什么样
+即父类有抛出的异常，那么子类重写父类方法时抛出与父类相同的异常或者不抛出异常
+如果父类没有抛出异常（也可以指父类方法抛异常），那么子类也不可以抛，即使在子类重写方法的方法体内throw了异常，也会在父类中自动补全
+
+
+
+自定义异常类
+package JavaSE.YiChang;
+
+
+
+/*
+自定义异常类，java提供异常类不够
+注意：
+    1.一般都以Exception结尾，说明是一个异常类
+    2.必须继承Exception或者RuntimeException
+        继承Exception:自定义异常类就是编译器异常，就必须处理
+        另外的：运行期异常，无需处理，交给虚拟机处理
+ */
+
+
+
+
+public class RegisterException extends Exception{
+    //添加一个空参数的构造方法
+    public RegisterException(){
+
+    }
+    //添加一个带异常信息的构造方法
+    //查看源码发现所有的异常类都会有这个方法且内部会调用父类
+    public RegisterException(String s){
+        super(s);
+    }
+}

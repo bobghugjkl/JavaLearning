@@ -1,0 +1,71 @@
+组件：
+    窗口
+    弹窗
+    面板
+    文本框
+    列表框
+    按钮
+    图片
+    交互
+    监听事件
+    鼠标
+    键盘
+    java
+    破解工具
+    反编译
+简介：
+Swing和AWT是核心技术，因为界面不美观所以不流行，而且需要jre环境
+MVC架构
+可以写出自己心中想要的小工具
+工作时候需要维护到swing界面
+了解MVC架构，监听器
+
+
+AWT
+底层实现
+new  类！
+包含很多类和接口  GUI：图形用户界面编程
+Eeclipse:Java
+元素：窗口，按钮，文本框
+java.awt包
+
+
+组件：Component
+    按钮：button,TextArea,Label...
+    容器：Container(按钮存放在容器中)
+        Window
+            Frame窗口
+            Dialog弹窗
+        面板Panel
+            Applet网页编程
+
+
+面板Penel
+    可以内嵌,但不能单独存在
+
+
+布局管理器
+    流式布局
+    东西南北中
+    表格布局
+
+事件监听：
+    当某个事件发生时要干什么
+
+
+输入框TextField监听
+组合大于继承！
+class A{
+    public B b;不会产生耦合性，优先使用这个
+}
+相当于
+class A extends B{
+
+}
+
+画笔
+鼠标监听，窗口监听，键盘监听
+
+Swing——JFrame
+
+JpasswordField()//密码

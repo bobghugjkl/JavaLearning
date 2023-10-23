@@ -1,0 +1,92 @@
+List继承Collection 是一个有序的集合（存储元素和去除元素的顺序是一致的）
+                    有索引，包含一些带索引的方法
+                    允许重复存储元素
+里面的一些方法：add  get  remove  set
+一定要防止索引越界
+
+package List;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Demo {
+    public static void main(String[] args) {
+        //创建一个List集合对象，多态
+        List<String> list = new ArrayList<>();
+        list.add("a");
+        list.add("b");
+        list.add("a");
+        System.out.println(list);
+        list.add(2,"jadkdj");
+        String removeE = list.remove(3);
+        System.out.println(removeE);
+        //替换
+        String setE = list.set(0, "A");
+        System.out.println(list);
+        System.out.println(setE);
+        //注意索引越界异常，数组索引越界异常，字符串索引越界异常
+
+    }
+}
+
+
+
+
+
+List的子类
+ArrayList反之
+LinkList查询慢增删快
+    pop
+    push
+
+package List;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+/*
+LinkList继承List接口
+底层链表结构
+使用其特有方法时不可以使用多态
+ */
+public class Demo {
+    public static void main(String[] args) {
+        show01();
+
+    }
+    //三个添加的方法,以及其他方法
+    private static void show01() {
+        //创建对象
+        LinkedList<String>linked = new LinkedList<>();
+        linked.add("a");
+        linked.add("b");
+        linked.add("c");
+        System.out.println(linked);
+        linked.push("aaa");
+        linked.addFirst("www");
+        linked.addLast("qqq");
+        System.out.println(linked);
+        //返回第一个元素，以及最后一个元素
+        String first = linked.getFirst();
+        String last = linked.getLast();
+        //linked.clear();
+        System.out.println(linked);
+        System.out.println(first);
+        System.out.println(last);
+        boolean s = linked.isEmpty();
+        System.out.println(s);
+        String s1 = linked.removeFirst();
+        linked.removeLast();
+        linked.pop();
+
+
+
+    }
+}
+
+
+vector:可增长的对象数组
+    addElement:增加元素（末尾）
+    Enumeration<E>最早期的迭代期接口，用于vector的使用
+        hasMoreEnumeration()
+        hasEnumeration()

@@ -1,0 +1,55 @@
+238~241
+集合：是一种容器，长度可以变化，只能存放包装类，但数组可以存放包装类和基本类型
+1.存储数据
+2.遍历集合
+3.每种集合的特性
+
+
+List集合接口特性：有序的集合，存取和取出元素顺序相同
+               允许存储重复元素
+               可以使用普通的for循环遍历，有索引
+               代表：vector ArrayList（重点）（底层数组实现，查询快增删慢） LinkedList（底层链表，查询慢增删快）
+set接口：
+        不允许存放相同元素
+        TreeSet和HashSet是无序的集合，存储和取出不一致
+        没有索引，无法使用普通for循环
+        代表：TreeSet（底层二叉树，一般用于排序） HashSet（重点）（底层哈希表+红黑树实现） LinkedHashSet（底层哈希表+链表实现，可以保证存取顺序）
+
+这两个都抽象出来得到Collection集合接口（无索引且共性的方法）
+学习顶层，使用底层
+
+所以，collection指的是共性方法，是所有的都可以使用的方法
+
+
+
+/*
+        java.util.Collection接口
+        是所有单列集合的共性方法。任意的都可以使用这些方法
+         */
+        //创建集合对象，使用多态，既让接口指向他的实现类
+        JavaSE.Collection<String>coll = new ArrayList<>();//不一定ArrayList因为是多态，只要是那几种集合就可以
+        System.out.println(coll);//重写了tostring方法
+        //public boolean add(E e):添加，返回是一个boolean
+        boolean b1 = coll.add("zhangsan");
+        System.out.println("b1:"+b1);
+        System.out.println(coll);
+        coll.add("Tom");
+        coll.add("....");
+        System.out.println(coll);
+        //remove删除元素,一样返回bool
+        boolean b2 =coll.remove("....");
+        System.out.println(b2);
+        //contains查看是否包含对象
+        boolean b3 =coll.contains("Tom");
+        System.out.println(b3);
+        //isEmpty判断是否为空
+        boolean b4 =coll.isEmpty();
+        System.out.println(b4);
+        //toArray()把集合中的元素存储至数组中
+        Object[] arr =coll.toArray();
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i]);
+        }
+        //clear()清空集合所有元素但不删除集合
+        coll.clear();
+        System.out.println(coll);
